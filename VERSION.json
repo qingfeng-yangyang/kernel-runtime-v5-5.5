@@ -1,0 +1,16 @@
+{
+  "version": "5.5.0",
+  "baseline": "V5.2 accepted",
+  "release_type": "preproduction foundation",
+  "automated_tests": 56,
+  "load_test": {
+    "mode": "fake_llm_sanitized_zero_token",
+    "tasks": 500,
+    "concurrency": 24,
+    "completed": 500,
+    "failed": 0
+  },
+  "real_data_included": false,
+  "real_delivery_enabled": false,
+  "secrets_included": false
+}

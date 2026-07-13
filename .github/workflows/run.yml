@@ -1,1 +1,29 @@
+name: Runtime V5.5 Preproduction Gate
 
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install package
+        run: python -m pip install -e .
+      - name: Compile all source
+        run: python -m compileall -q src tests load_tests
+      - name: Run full regression and V5.5 tests
+        run: python -m unittest discover -s tests -v
+      - name: Run closed-loop demo
+        run: python main.py
+      - name: Run zero-token sanitized load gate
+        run: python load_tests/run_load.py --tasks 100 --concurrency 12
